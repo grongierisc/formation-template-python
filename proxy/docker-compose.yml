@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+
+  proxy:
+    build:
+      context: .
+      args:
+        link: 'iris'
+        port: '52773'
+    image: proxyiris:latest
+    ports:
+    - "80:80"
+    - "443:443"
+    volumes:
+    - ./CSP.ini:/opt/webgateway/bin/CSP.ini
+    - ./httpd-csp.conf:/usr/local/apache2/conf/extra/httpd-csp.conf
+
+  iris:
+    image: intersystemsdc/iris-community:latest
+    hostname: iris
+    command: 
+      - --check-caps false
+      - -a
+      - iris session iris -U%SYS '##class(Security.Users).UnExpireUserPasswords("*")'
+
+    volumes:
+      - ./data/dur:/dur
+    environment:
+      - ISC_DATA_DIRECTORY=/dur/iconfig

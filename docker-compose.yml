@@ -12,6 +12,21 @@ services:
     - 52775:52773
     - 51776:1972
     - 8888:8888
+
+  proxy:
+    build:
+      context: proxy
+      args:
+        link: 'iris'
+        port: '52773'
+    image: proxyiris:latest
+    ports:
+    - "80:80"
+    - "443:443"
+    volumes:
+    - ./proxy/CSP.ini:/opt/webgateway/bin/CSP.ini
+    - ./proxy/httpd-csp.conf:/usr/local/apache2/conf/extra/httpd-csp.conf
+
   db:
     image: postgres:12.2
     hostname: db

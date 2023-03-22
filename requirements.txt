@@ -2,3 +2,7 @@ dataclass_csv==1.4.0
 Flask==2.1.1
 psycopg2-binary==2.9.3
 requests==2.27.1
+sqlalchemy==1.4.22
+sqlalchemy-iris==0.5.0
+https://github.com/intersystems-community/intersystems-irispython/releases/download/3.4.1/intersystems_iris-3.4.1-py3-none-any.whl
+irissqlcli
