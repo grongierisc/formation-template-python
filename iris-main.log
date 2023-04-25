@@ -1815,3 +1815,186 @@ Starting IRIS
 
 14:42:10 2022-08-30 [INFO] ...started InterSystems IRIS instance IRIS
 14:46:20 2022-08-30 [INFO] Shutting down InterSystems IRIS instance IRIS...
+07:47:59 2023-04-24 [INFO] Executing command /home/irisowner/irissys/startISCAgent.sh 2188...
+07:47:59 2023-04-24 [INFO] Writing status to file: /home/irisowner/irissys/iscagent.status
+Reading configuration from file: /home/irisowner/irissys/iscagent.conf
+ISCAgent[17]: Starting
+ISCAgent[19]: Starting ApplicationServer on *:2188
+
+07:47:59 2023-04-24 [INFO] ...executed command /home/irisowner/irissys/startISCAgent.sh 2188
+07:47:59 2023-04-24 [INFO] Starting InterSystems IRIS instance IRIS...
+07:48:06 2023-04-24 [INFO] Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+Starting Control Process
+Global buffer setting requires attention.  Auto-selected 25% of total memory.
+Allocated 2477MB shared memory
+1989MB global buffers, 198MB routine buffers
+This copy of InterSystems IRIS has been licensed for use exclusively by:
+InterSystems IRIS Community
+Copyright (c) 1986-2022 by InterSystems Corporation
+Any other use is a violation of your license agreement
+
+2 alert(s) during startup. See messages.log for details.
+Starting IRIS
+
+
+07:48:06 2023-04-24 [INFO] ...started InterSystems IRIS instance IRIS
+09:44:11 2023-04-24 [INFO] Shutting down InterSystems IRIS instance IRIS...
+09:44:20 2023-04-24 [INFO] Verifying InterSystems IRIS instance IRIS is down...
+09:44:20 2023-04-24 [INFO] IRIS^/usr/irissys^2022.2.0.368.0com^down, last used Mon Apr 24 09:44:16 2023^iris.cpf^1972^52773^0^^IRIS^^^/usr/irissys
+
+09:44:20 2023-04-24 [INFO] ...verified that InterSystems IRIS instance IRIS is down
