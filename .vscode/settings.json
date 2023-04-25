@@ -8,8 +8,10 @@
       "ns": "IRISAPP",
       "username": "SuperUser",
       "password": "SYS",
-      "host": "localhost",
-      "port": 52773,
+      "docker-compose": {
+        "service": "iris",
+        "internalPort": 52773
+      },
       "active": true
     },
     "sqltools.connections": [

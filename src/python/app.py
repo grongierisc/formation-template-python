@@ -8,13 +8,20 @@ from grongier.pex import Director
 from sqlalchemy import create_engine
 import pandas as pd
 
-engine = create_engine('iris+emb:///IRISAPP')
-engine_pg = create_engine('postgresql://DemoData:DemoData@db:5432/DemoData')
+import iris
+
+#engine = create_engine('iris://SuperUser:SYS@localhost:1972/IRISAPP')
+#engine_pg = create_engine('postgresql://DemoData:DemoData@db:5432/DemoData')
 
 app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def get_info():
+    info = {'version':'1.0.6'}
+    return jsonify(info)
+
+@app.route("/", methods=["POST"])
+def get_info_post():
     info = {'version':'1.0.6'}
     return jsonify(info)
 
@@ -36,10 +43,11 @@ def formation():
     formation = Formation(nom=nom,salle=salle)
     # create FormationRequest
     msg = FormationRequest(formation=formation)
-
-    bs = Director.create_business_service('Python.FlaskService')
-    
-    bs.ProcessInput(msg)
+    print("before dispatchProcessInput")
+    service = Director.CreateBusinessService("Python.FlaskService")
+    print("after dispatchProcessInput")
+    response = service.ProcessInput(msg)
+    print("after dispatchProcessInput(msg)")
 
     return jsonify({'value':'ok'})
 

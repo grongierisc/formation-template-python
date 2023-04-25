@@ -1,4 +1,4 @@
-ARG IMAGE=intersystemsdc/iris-community:2022.2.0.368.0-zpm
+ARG IMAGE=intersystemsdc/iris-community:latest
 FROM $IMAGE as builder
 
 USER root
@@ -37,3 +37,7 @@ RUN --mount=type=bind,source=/,target=/builder/root,from=builder \
     cp -f /builder/root/usr/irissys/iris.cpf /usr/irissys/iris.cpf && \
     python3 /irisdev/app/copy-data.py -c /usr/irissys/iris.cpf -d /builder/root/ 
 
+ENV PYTHON_PATH=/usr/irissys/bin/irispython
+ENV IRISUSERNAME "SuperUser"
+ENV IRISPASSWORD "SYS"
+ENV IRISNAMESPACE "IRISAPP"
