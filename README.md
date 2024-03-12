@@ -97,6 +97,18 @@ Then, to activate it, run the following command in your terminal:
 $ source .venv/bin/activate
 ```
 
+For windows :
+
+```ps1
+.venv\Scripts\Activate.ps1
+```
+
+If you encounter an error, you may need to run the following command in your terminal:
+
+```bash
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force; .venv\Scripts\Activate.ps1
+```
+
 To install the requirements, run the following command in your terminal:
 
 ```bash
