@@ -1,0 +1,18 @@
+POST http://127.0.0.1:5000/process
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "John Doe",
+    "room": "101"
+}
+
+###
+PUT http://127.0.0.1:5000/training/111
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "John Doe",
+    "room": "101"
+}

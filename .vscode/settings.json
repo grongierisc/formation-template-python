@@ -12,7 +12,8 @@
         "service": "iris",
         "internalPort": 52773
       },
-      "active": true
+      "active": true,
+      "server": "iris"
     },
     "sqltools.connections": [
       {
@@ -24,7 +25,33 @@
         "database": "DemoData",
         "username": "DemoData",
         "password": "DemoData"
+      },
+      {
+        "namespace": "IRISAPP",
+        "connectionMethod": "Server and Port",
+        "showSystem": false,
+        "previewLimit": 50,
+        "server": "localhost",
+        "port": 52773,
+        "https": false,
+        "askForPassword": false,
+        "driver": "InterSystems IRIS",
+        "name": "iris",
+        "username": "SuperUser",
+        "password": "SYS"
       }
     ],
-    "python.analysis.extraPaths": ["./src"]
+    "python.analysis.extraPaths": [
+      "./src",
+      "./src/training"
+    ],
+    "python.testing.unittestArgs": [
+      "-v",
+      "-s",
+      "./src",
+      "-p",
+      "*test*.py"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false
 }
