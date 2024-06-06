@@ -16,7 +16,6 @@ RUN iris start IRIS && \
     python3 /irisdev/app/iris_script.py && \
     iris stop IRIS quietly
 
-
 FROM $IMAGE as final
 
 ADD --chown=${ISC_PACKAGE_MGRUSER}:${ISC_PACKAGE_IRISGROUP} https://github.com/grongierisc/iris-docker-multi-stage-script/releases/latest/download/copy-data.py /irisdev/app/copy-data.py

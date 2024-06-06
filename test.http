@@ -1,0 +1,39 @@
+POST http://localhost:33783/fhir/r4/
+Content-Type: application/json+fhir
+Accept: application/json
+
+{ "resourceType": "Bundle",
+"type": "transaction",
+"entry": [{"resource": {"resourceType": "Patient", "identifier": [{"system": "http://icp.org/patient", "value": "1"}],
+"active": true,
+"name": [{"family": "John", "given": ["Doe"] } ],
+"telecom": [{"system": "phone", "value": "123456"}, {"system": "email", "value": "john.doe@gmail.com"}],
+"birthDate": "1980-01-01",
+"address": [{"line": ["Main Street 123"],
+"city": "New York",
+"postalCode": "12345",
+"country": "USA" } ] },
+"request": { "method": "PUT",
+"url": "Patient?identifier=http://icp.org/patient|1",
+"ifNoneExist": "Patient?identifier=http://icp.org/patient|1" } } ] }
+
+### 
+
+GET http://localhost:33783/fhir/r4/Patient?identifier=http://icp.org/patient|1
+Accept: application/json
+
+###
+PUT http://localhost:33783/fhir/r4/Patient/?identifier=http://icp.org/patient|1
+Content-Type: application/json+fhir
+Accept: application/json
+Etag: "1"
+
+{"resourceType": "Patient", "identifier": [{"system": "http://icp.org/patient", "value": "1"}],
+"active": true,
+"name": [{"family": "John", "given": ["Doe"] } ],
+"telecom": [{"system": "phone", "value": "123456"}, {"system": "email", "value": "john.doe@gmail.com"}],
+"birthDate": "1980-01-01",
+"address": [{"line": ["Main Street 123"],
+"city": "New York",
+"postalCode": "12345",
+"country": "USA" } ] }

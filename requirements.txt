@@ -5,3 +5,5 @@ sqlalchemy-iris==0.10.4
 flask==2.3.3
 requests==2.31.0
 psycopg2-binary==2.9.9
+fhir.resources
+dataclass-csv

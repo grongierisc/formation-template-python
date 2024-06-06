@@ -1,0 +1,15 @@
+training.msg.FormationRequest
+{
+"id":1,
+"nom":"toto",
+"salle":"toto"
+}
+
+training.msg.HttpRequest
+{
+    "url": "https://fa533983f9ed4f419284f91d6845b83c.api.mockbin.io/",
+    "method": "GET";
+    "body" : {
+        "message":"ttest"
+    }
+}

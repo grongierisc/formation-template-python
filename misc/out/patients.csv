@@ -1,0 +1,4 @@
+id;name;surname;address;phone;city;zipcode;country;email;genre;birthdate
+1;Toto;Doe;Main Street 123;123456;New York;12345;USA;john.doe@gmail.com;M;1980-01-01
+2;Toto;Doe;Main Street 123;123456;New York;12345;USA;john.doe@gmail.com;F;1980-01-01
+3;Toto;Smith;Main Street 123;123456;New York;12345;USA;john.doe@gmail.com;M;1980-01-01
