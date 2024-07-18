@@ -148,7 +148,7 @@ In this folder, create a new file named `bo.py`.
 This file will contain the code of our business operation.
 
 ```python
-from grongier.pex import BusinessOperation
+from iop import BusinessOperation
 
 class MyBo(BusinessOperation):
     def on_message(self, request):
@@ -157,7 +157,7 @@ class MyBo(BusinessOperation):
 
 Let's explain this code.
 
-First, we import the `BusinessOperation` class from the `grongier.pex` module.
+First, we import the `BusinessOperation` class from the `iop` module.
 
 Then, we create a class named `MyBo` that inherits from `BusinessOperation`.
 
@@ -267,7 +267,7 @@ To do this, create a new file in the `src/hello_world` folder, named `msg.py`.
 This file will contain the code of our message.
 
 ```python
-from grongier.pex import Message
+from iop import Message
 from dataclasses import dataclass
 
 @dataclass
@@ -287,7 +287,7 @@ To do this, we will modify the `bo.py` file.
 
 ```python
 from hello_world.msg import MyMsg
-from grongier.pex import BusinessOperation
+from iop import BusinessOperation
 
 class MyBo(BusinessOperation):
     def on_message(self, request):
@@ -335,7 +335,7 @@ To do this, we will modify the `bo.py` file.
 
 ```python
 from hello_world.msg import MyMsg
-from grongier.pex import BusinessOperation
+from iop import BusinessOperation
 
 class MyBo(BusinessOperation):
     def on_message(self, request):
@@ -422,7 +422,7 @@ To do this, we will create a new file in the `src/training` folder, named `msg.p
 This file will contain the code of our messages.
 
 ```python
-from grongier.pex import Message
+from iop import Message
 from dataclasses import dataclass
 
 @dataclass
@@ -450,7 +450,7 @@ This file will contain the code of our business operation.
 ```python
 import os
 from training.msg import FormationRequest
-from grongier.pex import BusinessOperation
+from iop import BusinessOperation
 
 class SaveInTxtBo(BusinessOperation):
     
@@ -573,7 +573,7 @@ This file will contain the code of our business service.
 import csv
 import os
 from training.msg import FormationRequest
-from grongier.pex import BusinessService
+from iop import BusinessService
 
 class ReadCsvBs(BusinessService):
 
