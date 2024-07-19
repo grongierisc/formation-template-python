@@ -18,7 +18,7 @@
 - [4. Prerequisites](#4-prerequisites)
 - [5. Setting up](#5-setting-up)
   - [5.1. Docker containers](#51-docker-containers)
-  - [5.2 Virtual Environnement](#52-virtual-environnement)
+  - [5.2. 5.2 Virtual Environnement](#52-52-virtual-environnement)
 - [6. The actual training](#6-the-actual-training)
   - [6.1. Warm up](#61-warm-up)
     - [6.1.1. Create a Business Operation](#611-create-a-business-operation)
@@ -26,19 +26,19 @@
     - [6.1.3. Run the production](#613-run-the-production)
     - [6.1.4. Bonus : Create a message](#614-bonus--create-a-message)
     - [6.1.5. Bonus : Use the message in the business operation](#615-bonus--use-the-message-in-the-business-operation)
-  - [Part 1 : Our first pipeline](#part-1--our-first-pipeline)
-    - [Objectives](#objectives)
-    - [Create a Message](#create-a-message)
-    - [Create a Business Operation](#create-a-business-operation)
-    - [Create a Business Service](#create-a-business-service)
-    - [Discover the UI](#discover-the-ui)
-    - [Add a component to the production](#add-a-component-to-the-production)
-    - [Exercise](#exercise)
-      - [Solution](#solution)
-  - [Part 2 : Inserting data in an extern database](#part-2--inserting-data-in-an-extern-database)
-    - [Message](#message)
-    - [Business Operation](#business-operation)
-    - [Business Process](#business-process)
+  - [6.2. Part 1 : Our first pipeline](#62-part-1--our-first-pipeline)
+    - [6.2.1. Objectives](#621-objectives)
+    - [6.2.2. Create a Message](#622-create-a-message)
+    - [6.2.3. Create a Business Operation](#623-create-a-business-operation)
+    - [6.2.4. Create a Business Service](#624-create-a-business-service)
+    - [6.2.5. Discover the UI](#625-discover-the-ui)
+    - [6.2.6. Add a component to the production](#626-add-a-component-to-the-production)
+    - [6.2.7. Exercise](#627-exercise)
+      - [6.2.7.1. Solution](#6271-solution)
+  - [6.3. Part 2 : Inserting data in an extern database](#63-part-2--inserting-data-in-an-extern-database)
+    - [6.3.1. Message](#631-message)
+    - [6.3.2. Business Operation](#632-business-operation)
+    - [6.3.3. Business Process](#633-business-process)
 
 # 2. Framework
 
@@ -87,7 +87,7 @@ $ docker-compose up -d
 
 💡 FYI : the root folder of this projet is mounted in the IRIS container in the /irisdev/app folder.
 
-## 5.2 Virtual Environnement
+## 5.2. 5.2 Virtual Environnement
 
 We will need to create a virtual environnement for our application.
 
@@ -393,7 +393,7 @@ Great, we have a variable output message.
 
 Now it's time to get serious 🔥.
 
-## Part 1 : Our first pipeline
+## 6.2. Part 1 : Our first pipeline
 
 Now, we will create a pipeline that will read lines from a csv file and save it into the IRIS database and in a .txt file.
 
@@ -405,7 +405,7 @@ To do this, we will create a new folder in the `src` folder, named `training`.
 $ mkdir src/training
 ```
 
-### Objectives
+### 6.2.1. Objectives
 
 The objectives of this part are:
 
@@ -419,7 +419,7 @@ id;nom;salle
 2;Formation IRIS;Lyon
 ```
 
-### Create a Message
+### 6.2.2. Create a Message
 
 A good habit when creating a pipeline is to start by creating the messages that will be used in the pipeline.
 
@@ -447,7 +447,7 @@ We will use this message to save the data in a .txt file.
 
 So, we need to create the Business Operation that will save the data in a .txt file.
 
-### Create a Business Operation
+### 6.2.3. Create a Business Operation
 
 To do this, we will create a new file in the `src/training` folder, named `bo.py`.
 
@@ -569,7 +569,7 @@ $ cat data/formation.txt
 
 Ok, now last but not least, we need to create the service that will read the csv file and send the data to our business operation.
 
-### Create a Business Service
+### 6.2.4. Create a Business Service
 
 To do this, we will create a new file in the `src/training` folder, named `bs.py`.
 
@@ -657,7 +657,7 @@ Finally, we send the message to the business operation.
 
 Now, we can add this business service to our production.
 
-### Discover the UI
+### 6.2.5. Discover the UI
 
 For the first time, we will use the UI to do this.
 
@@ -675,7 +675,7 @@ To access the message view, go to http://localhost:52775/csp/irisapp/EnsPortal.M
 
 Default login and password are `SuperUser` and `SYS`.
 
-### Add a component to the production
+### 6.2.6. Add a component to the production
 
 We still have to register our business service class to iris.
 
@@ -753,11 +753,11 @@ This will export the configuration of the production that you can copy paste in 
 
 Congratulations 🎉. You have created your first pipeline.
 
-### Exercise
+### 6.2.7. Exercise
 
 In this exercise, you will have to modify the Business Service in a wat that each time a file is read and the data is sent to the Business Operation, the file is moved to an `archive` folder.
 
-#### Solution
+#### 6.2.7.1. Solution
 
 To do this, we will modify the `ReadCsvBs` class.
 
@@ -819,13 +819,13 @@ class ReadCsvBs(BusinessService):
 Now, we can test our business service by restarting the production.
 
 
-## Part 2 : Inserting data in an extern database
+## 6.3. Part 2 : Inserting data in an extern database
 
 During this part, we will see how to connect to an extern database and insert data in it.
 
 Then we will hook this to our pipeline, to do so we will create a new business process that will be in charge of transforming the data and sending it to the business operation that will insert the data in the extern database.
 
-### Message
+### 6.3.1. Message
 
 First, we will create a message that will be used to insert data in the extern database.
 
@@ -854,7 +854,7 @@ This message contains two attributes:
 
 We will use this message to insert data in the extern database.
 
-### Business Operation
+### 6.3.2. Business Operation
 
 Now, we will create a business operation that will insert data in the extern database.
 
@@ -1004,7 +1004,7 @@ $ docker-compose exec db psql -U DemoData -d DemoData -c "SELECT * FROM formatio
 
 Congratulations 🎉. Now let's move to the Business Process.
 
-### Business Process
+### 6.3.3. Business Process
 
 Now, we will create a business process that will be in charge of transforming the data and sending it to the business operation that will insert the data in the extern database.
 
