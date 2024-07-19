@@ -959,7 +959,7 @@ PRODUCTIONS = [
                     {
                         "@Name": "Instance.Of.ReadCsvBs",
                         "@ClassName": "MyIRIS.ReadCsvBs",
-                    }
+                    },
                     {
                         "@Name": "Instance.Of.PostgresOperation",
                         "@ClassName": "MyIRIS.PostgresOperation",
