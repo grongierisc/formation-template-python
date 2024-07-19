@@ -907,7 +907,7 @@ class PostgresOperation(BusinessOperation):
         """
         cursor = self.conn.cursor()
         sql = "INSERT INTO public.formation ( name,room ) VALUES ( %s , %s )"
-        cursor.execute(sql,(request.training.name,request.training.room))
+        cursor.execute(sql,(request.name,request.room))
         return None
 ```
 
