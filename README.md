@@ -33,6 +33,12 @@
     - [Create a Business Service](#create-a-business-service)
     - [Discover the UI](#discover-the-ui)
     - [Add a component to the production](#add-a-component-to-the-production)
+    - [Exercise](#exercise)
+      - [Solution](#solution)
+  - [Part 2 : Inserting data in an extern database](#part-2--inserting-data-in-an-extern-database)
+    - [Message](#message)
+    - [Business Operation](#business-operation)
+    - [Business Process](#business-process)
 
 # 2. Framework
 
@@ -408,9 +414,9 @@ The objectives of this part are:
 The format of the csv file is the following:
 
 ```csv
-id,nom,salle
-1,Formation IRIS,Paris
-2,Formation IRIS,Lyon
+id;nom;salle
+1;Formation IRIS;Paris
+2;Formation IRIS;Lyon
 ```
 
 ### Create a Message
@@ -473,7 +479,7 @@ class SaveInTxtBo(BusinessOperation):
         with open(os.path.join(self.path, self.filename), 'a') as self.file:
             self.file.write(f'{request.id};{request.nom};{request.salle}\n')
             # log the message
-            self.logger.info(f'FormationRequest {request.id} saved in {self.filename}')
+            self.log_info(f'FormationRequest {request.id} saved in {self.filename}')
 
 ```
 
@@ -746,3 +752,378 @@ To do this, run the following command in your terminal:
 This will export the configuration of the production that you can copy paste in the `src/settings.py` file.
 
 Congratulations 🎉. You have created your first pipeline.
+
+### Exercise
+
+In this exercise, you will have to modify the Business Service in a wat that each time a file is read and the data is sent to the Business Operation, the file is moved to an `archive` folder.
+
+#### Solution
+
+To do this, we will modify the `ReadCsvBs` class.
+
+```python
+import csv
+import os
+from training.msg import FormationRequest
+from iop import BusinessService
+
+class ReadCsvBs(BusinessService):
+
+    def get_adapter_type():
+        # This is mandatory to schedule the service
+        # By default, the service will be scheduled every 5 seconds
+        return "Ens.InboundAdapter"
+    
+    def on_init(self):
+        # Check if the instane of ReadCsvBs has a filename attribute
+        # If not, set it to 'formation.csv' as default value
+        if not hasattr(self, 'filename'):
+            self.filename = 'formation.csv'
+        # Check if the instane of ReadCsvBs has a path attribute
+        # If not, set it to '/irisdev/app/data/' as default value
+        if not hasattr(self, 'path'):
+            self.path = '/irisdev/app/misc/'
+        # Check if the target attribute is set
+        if not hasattr(self, 'target'):
+            # If not, set it to 'Instance.Of.SaveInTxtBo' as default value
+            self.target = 'Instance.Of.SaveInTxtBo'
+        if not hasattr(self, 'regex'):
+            self.regex = '*.csv'
+        # Create the archive folder if it does not exist
+        os.makedirs(os.path.join(self.path, 'archive'), exist_ok=True)
+
+    def on_process_input(self, message_input):
+        # Open the csv file
+        with open(os.path.join(self.path, self.filename), newline='') as csvfile:
+            # Create a csv reader
+            reader = csv.reader(csvfile, delimiter=';')
+            # Skip the header
+            next(reader)
+            # For each row in the csv file
+            for row in reader:
+                # Create a FormationRequest message
+                msg = FormationRequest()
+                # Set the attributes of the message
+                msg.id = int(row[0])
+                msg.nom = row[1]
+                msg.salle = row[2]
+                # Send the message to the business operation
+                self.send_request_sync(self.target,msg)
+                # Log the message
+                self.log_info(f'FormationRequest {msg.id} sent to Instance.Of.SaveInTxtBo')
+
+        # Move the file to the archive folder
+        os.rename(os.path.join(self.path, self.filename), os.path.join(self.path, 'archive', self.filename))
+```
+
+Now, we can test our business service by restarting the production.
+
+
+## Part 2 : Inserting data in an extern database
+
+During this part, we will see how to connect to an extern database and insert data in it.
+
+Then we will hook this to our pipeline, to do so we will create a new business process that will be in charge of transforming the data and sending it to the business operation that will insert the data in the extern database.
+
+### Message
+
+First, we will create a message that will be used to insert data in the extern database.
+
+To do this, we will create a new class in the module `msg.py`.
+
+```python
+from iop import Message
+from dataclasses import dataclass
+
+@dataclass
+class FormationRequest(Message):
+    id: int = 0
+    nom: str = ''
+    salle: str = ''
+
+@dataclass
+class TrainingInsertRequest(Message):
+    name: str = ''
+    room: str = ''
+```
+
+This message contains two attributes:
+
+- `name` : a string
+- `room` : a string
+
+We will use this message to insert data in the extern database.
+
+### Business Operation
+
+Now, we will create a business operation that will insert data in the extern database.
+
+To do this, we will create a new class in the module `bo.py`.
+
+```python
+import os
+from training.msg import FormationRequest,TrainingInsertRequest
+from iop import BusinessOperation
+import psycopg2
+
+class SaveInTxtBo(BusinessOperation):
+...
+
+class PostgresOperation(BusinessOperation):
+    """
+    It is an operation that write trainings in the Postgres database
+    """
+
+    def on_init(self):
+        """
+        it is a function that connects to the Postgres database and init a connection object
+        :return: None
+        """
+        self.conn = psycopg2.connect(
+        host="db",
+        database="DemoData",
+        user="DemoData",
+        password="DemoData",
+        port="5432")
+        self.conn.autocommit = True
+
+        return None
+
+    def on_tear_down(self):
+        """
+        It closes the connection to the database
+        :return: None
+        """
+        self.conn.close()
+        return None
+
+    def insert_training(self,request:TrainingInsertRequest):
+        """
+        It inserts a training in the Postgres database
+        
+        :param request: The request object that will be passed to the function
+        :type request: TrainingRequest
+        :return: None
+        """
+        cursor = self.conn.cursor()
+        sql = "INSERT INTO public.formation ( name,room ) VALUES ( %s , %s )"
+        cursor.execute(sql,(request.training.name,request.training.room))
+        return None
+```
+
+This business operation will connect to a Postgres database and insert data in it.
+
+Let's explain this code.
+
+First, we import our message.
+
+Then, we create a class named `PostgresOperation` that inherits from `BusinessOperation`.
+
+Then, we override the `on_init` method. This method will be called when the business operation is initialized.
+
+In this method, we connect to the Postgres database.
+
+Then, we override the `on_tear_down` method. This method will be called when the business operation is stopped.
+
+In this method, we close the connection to the Postgres database.
+
+Finally, we create the `insert_training` method. This method will be called when a `TrainingInsertRequest` message is received by the business operation.
+
+In this method, we insert the data in the Postgres database.
+
+Now, we can add this business operation to our production.
+
+To do this, we will modify the `src/settings.py` file.
+
+```python
+from training.bs import ReadCsvBs
+from training.bo import SaveInTxtBo,PostgresOperation
+
+CLASSES = {
+    "MyIRIS.SaveInTxtBo": SaveInTxtBo,
+    "MyIRIS.ReadCsvBs": ReadCsvBs,
+    "MyIRIS.PostgresOperation": PostgresOperation
+}
+
+# No need to add the business service to the production
+# We will add it directly in the UI
+PRODUCTIONS = [
+        {
+            'MyIRIS.Production': {
+                "@TestingEnabled": "true",
+                "Item": [
+                    {
+                        "@Name": "Instance.Of.SaveInTxtBo",
+                        "@ClassName": "MyIRIS.SaveInTxtBo",
+                    },
+                    {
+                        "@Name": "Instance.Of.ReadCsvBs",
+                        "@ClassName": "MyIRIS.ReadCsvBs",
+                    }
+                    {
+                        "@Name": "Instance.Of.PostgresOperation",
+                        "@ClassName": "MyIRIS.PostgresOperation",
+                    }
+                ]
+            }
+        } 
+    ]
+```
+
+Let's migrate the code to IRIS.
+
+To do this, run the following command in your terminal:
+
+```bash
+% iop --migrate /irisdev/app/src/settings.py
+```
+
+Then, we can run the production.
+
+To do this, run the following command in your terminal:
+
+```bash
+% iop --restart
+```
+
+Now, we can send a test message to our business operation.
+
+To do this, run the following command in your terminal:
+
+```bash
+% iop --test Instance.Of.PostgresOperation --classname training.msg.TrainingInsertRequest --body '{"name": "Formation IRIS", "room": "Paris"}'
+```
+
+Check the result in the Postgres database.
+
+To do this, run the following command in your terminal:
+
+```bash
+$ docker-compose exec db psql -U DemoData -d DemoData -c "SELECT * FROM formation"
+```
+
+Congratulations 🎉. Now let's move to the Business Process.
+
+### Business Process
+
+Now, we will create a business process that will be in charge of transforming the data and sending it to the business operation that will insert the data in the extern database.
+
+To do so, we need to create a new file in the `src/training` folder, named `bp.py`.
+
+This file will contain the code of our business process.
+
+```python
+from training.msg import FormationRequest,TrainingInsertRequest
+
+from iop import BusinessProcess
+
+class TrainingProcess(BusinessProcess):
+    """
+    It is a process that will transform the FormationRequest message into a TrainingInsertRequest message
+    """
+
+    def on_formation_request(self,request:FormationRequest):
+        """
+        It is a function that will transform the FormationRequest message into a TrainingInsertRequest message
+        
+        :param request: The request object that will be passed to the function
+        :type request: FormationRequest
+        :return: None
+        """
+        new_request = TrainingInsertRequest()
+        new_request.name = request.nom
+        new_request.room = request.salle
+        
+        return self.send_request_sync('Instance.Of.PostgresOperation',new_request)
+```
+
+This business process will transform the `FormationRequest` message into a `TrainingInsertRequest` message.
+
+Let's explain this code.
+
+First, we import our messages.
+
+Then, we create a class named `TrainingProcess` that inherits from `BusinessProcess`.
+
+Finally, we create the `on_formation_request` method. This method will be called when a `FormationRequest` message is received by the business process.
+
+In this method, we create a `TrainingInsertRequest` message.
+
+Then, we set the attributes of the message.
+
+Finally, we send the message to the business operation.
+
+Now, we can add this business process to our production.
+
+To do this, we will modify the `src/settings.py` file.
+
+```python
+from training.bp import TrainingProcess
+from training.bs import ReadCsvBs
+from training.bo import SaveInTxtBo,PostgresOperation
+
+CLASSES = {
+    "MyIRIS.SaveInTxtBo": SaveInTxtBo,
+    "MyIRIS.ReadCsvBs": ReadCsvBs,
+    "MyIRIS.PostgresOperation": PostgresOperation,
+    "MyIRIS.TrainingProcess": TrainingProcess
+}
+
+PRODUCTIONS = [
+        {
+            'MyIRIS.Production': {
+                "@TestingEnabled": "true",
+                "Item": [
+                    {
+                        "@Name": "Instance.Of.SaveInTxtBo",
+                        "@ClassName": "MyIRIS.SaveInTxtBo",
+                    },
+                    {
+                        "@Name": "Instance.Of.ReadCsvBs",
+                        "@ClassName": "MyIRIS.ReadCsvBs",
+                    },
+                    {
+                        "@Name": "Instance.Of.PostgresOperation",
+                        "@ClassName": "MyIRIS.PostgresOperation",
+                    },
+                    {
+                        "@Name": "Instance.Of.TrainingProcess",
+                        "@ClassName": "MyIRIS.TrainingProcess",
+                    }
+                ]
+            }
+        } 
+    ]
+```
+
+Let's migrate the code to IRIS.
+
+To do this, run the following command in your terminal:
+
+```bash
+% iop --migrate /irisdev/app/src/settings.py
+```
+
+Then, we can run the production.
+
+To do this, run the following command in your terminal:
+
+```bash
+% iop --restart
+```
+
+Now, we can send a test message to our business process.
+
+To do this, run the following command in your terminal:
+
+```bash
+% iop --test Instance.Of.TrainingProcess --classname training.msg.FormationRequest --body '{"id": 1, "nom": "Formation IRIS", "salle": "Paris"}'
+```
+
+Check the result in the Postgres database.
+
+To do this, run the following command in your terminal:
+
+```bash
+$ docker-compose exec db psql -U DemoData -d DemoData -c "SELECT * FROM formation"
+```
