@@ -18,7 +18,7 @@
 - [4. Prerequisites](#4-prerequisites)
 - [5. Setting up](#5-setting-up)
   - [5.1. Docker containers](#51-docker-containers)
-  - [5.2. 5.2 Virtual Environnement](#52-52-virtual-environnement)
+  - [5.2. Virtual Environnement](#52-virtual-environnement)
 - [6. The actual training](#6-the-actual-training)
   - [6.1. Warm up](#61-warm-up)
     - [6.1.1. Create a Business Operation](#611-create-a-business-operation)
@@ -87,7 +87,7 @@ $ docker-compose up -d
 
 💡 FYI : the root folder of this projet is mounted in the IRIS container in the /irisdev/app folder.
 
-## 5.2. 5.2 Virtual Environnement
+## 5.2. Virtual Environnement
 
 We will need to create a virtual environnement for our application.
 
