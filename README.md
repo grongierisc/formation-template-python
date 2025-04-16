@@ -495,13 +495,12 @@ In this method, we check if the instance of `SaveInTxtBo` has a `filename` attri
 
 Then, we check if the instance of `SaveInTxtBo` has a `path` attribute. If not, we set it to `/irisdev/app/data/` as default value.
 
-Finally, we open the file in append mode.
 
 Then, we create the `on_formation_request` method. This method will be called when a `FormationRequest` message is received by the business operation.
 
-In this method, we log the data received.
-
+In this method, we open the file in append mode.
 Then, we write the data in the file.
+Finally, we log the data received.
 
 Now, we can add this business operation to our production.
 
@@ -594,7 +593,7 @@ class ReadCsvBs(BusinessService):
         if not hasattr(self, 'filename'):
             self.filename = 'formation.csv'
         # Check if the instane of ReadCsvBs has a path attribute
-        # If not, set it to '/irisdev/app/data/' as default value
+        # If not, set it to '/irisdev/app/misc/' as default value
         if not hasattr(self, 'path'):
             self.path = '/irisdev/app/misc/'
         # Check if the target attribute is set
@@ -620,7 +619,7 @@ class ReadCsvBs(BusinessService):
                 # Send the message to the business operation
                 self.send_request_sync(self.target,msg)
                 # Log the message
-                self.log_info(f'FormationRequest {msg.id} sent to Instance.Of.SaveInTxtBo')
+                self.log_info(f'FormationRequest {msg.id} sent to {self.target}')
 ```
 
 Let's explain this code.
@@ -637,7 +636,7 @@ Then, we override the `on_init` method. This method will be called when the busi
 
 In this method, we check if the instance of `ReadCsvBs` has a `filename` attribute. If not, we set it to `formation.csv` as default value.
 
-Then, we check if the instance of `ReadCsvBs` has a `path` attribute. If not, we set it to `/irisdev/app/data/` as default value.
+Then, we check if the instance of `ReadCsvBs` has a `path` attribute. If not, we set it to `/irisdev/app/misc/` as default value.
 
 Finally, we check if the instance of `ReadCsvBs` has a `target` attribute. If not, we set it to `Instance.Of.SaveInTxtBo` as default value.
 
