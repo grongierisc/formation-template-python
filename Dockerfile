@@ -3,6 +3,8 @@ FROM $IMAGE as builder
 
 COPY . /irisdev/app
 
+ADD https://github.com/grongierisc/iris-docker-multi-stage-script/releases/latest/download/copy-data.py /irisdev/app/copy-data.py
+
 RUN pip3 install -r /irisdev/app/requirements.txt
 
 # fix ld_library_path
@@ -19,7 +21,7 @@ RUN iris start IRIS && \
 
 FROM $IMAGE as final
 
-ADD --chown=${ISC_PACKAGE_MGRUSER}:${ISC_PACKAGE_IRISGROUP} https://github.com/grongierisc/iris-docker-multi-stage-script/releases/latest/download/copy-data.py /irisdev/app/copy-data.py
+COPY --from=builder --chown=${ISC_PACKAGE_MGRUSER}:${ISC_PACKAGE_IRISGROUP} /irisdev/app/copy-data.py /irisdev/app/copy-data.py
 
 RUN --mount=type=bind,source=/,target=/builder/root,from=builder \
     cp -f /builder/root/usr/irissys/iris.cpf /usr/irissys/iris.cpf && \
