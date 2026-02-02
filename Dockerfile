@@ -1,34 +1,11 @@
-ARG IMAGE=intersystemsdc/iris-community:latest
-FROM $IMAGE as builder
+ARG IMAGE=containers.intersystems.com/intersystems/iris-community:latest-cd
+FROM $IMAGE
 
 COPY . /irisdev/app
 
-ADD https://github.com/grongierisc/iris-docker-multi-stage-script/releases/latest/download/copy-data.py /irisdev/app/copy-data.py
+# Update environment variables
+ENV LD_LIBRARY_PATH=${ISC_PACKAGE_INSTALLDIR}/bin:/home/irisowner/irissys/:${LD_LIBRARY_PATH}
+ENV PATH=/home/irisowner/.local/bin:$PATH
+ENV IRISNAMESPACE="IRISAPP"
 
-RUN pip3 install -r /irisdev/app/requirements.txt
-
-# fix ld_library_path
-ENV LD_LIBRARY_PATH=${ISC_PACKAGE_INSTALLDIR}/bin:/home/irisowner/irissys/:$LD_LIBRARY_PATH
-ENV IRISNAMESPACE "IRISAPP"
-
-# load demo stuff
-RUN iris start IRIS && \
-    iris merge IRIS /irisdev/app/merge.cpf && \
-    iop --init && \
-    python3 /irisdev/app/iris_script.py && \
-    iris stop IRIS quietly
-
-
-FROM $IMAGE as final
-
-COPY --from=builder --chown=${ISC_PACKAGE_MGRUSER}:${ISC_PACKAGE_IRISGROUP} /irisdev/app/copy-data.py /irisdev/app/copy-data.py
-
-RUN --mount=type=bind,source=/,target=/builder/root,from=builder \
-    cp -f /builder/root/usr/irissys/iris.cpf /usr/irissys/iris.cpf && \
-    python3 /irisdev/app/copy-data.py -c /usr/irissys/iris.cpf -d /builder/root/ 
-
-ENV PYTHON_PATH=/usr/irissys/bin/irispython
-ENV LD_LIBRARY_PATH=${ISC_PACKAGE_INSTALLDIR}/bin:/home/irisowner/irissys/:$LD_LIBRARY_PATH
-ENV IRISUSERNAME "SuperUser"
-ENV IRISPASSWORD "SYS"
-ENV IRISNAMESPACE "IRISAPP"
+RUN pip3 install -r /irisdev/app/requirements.txt --break-system-packages

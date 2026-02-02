@@ -1,4 +1,5 @@
 import glob
+import os
 import iris
 import pandas as pd
 from sqlalchemy import create_engine
@@ -29,3 +30,6 @@ try:
     Utils.migrate('/irisdev/app/src/settings.py')
 except Exception as e:
     print(e)
+
+# exit the script
+exit()
