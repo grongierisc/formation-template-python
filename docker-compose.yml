@@ -10,6 +10,7 @@ services:
       - --after sh /irisdev/app/init_iris.sh
     environment:
       - ISC_CPF_MERGE_FILE=/irisdev/app/merge.cpf
+      - PYTHONPATH=/irisdev/app/src
     ports:
     - 52775:52773
     - 51776:1972

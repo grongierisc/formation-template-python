@@ -3,7 +3,7 @@ import os
 import iris
 import pandas as pd
 from sqlalchemy import create_engine
-from iop import Utils
+from iop.migration.utils import migrate
 
 # switch namespace to the %SYS namespace
 iris.system.Process.SetNamespace("%SYS")
@@ -27,7 +27,7 @@ iris.system.Process.SetNamespace("IRISAPP")
 
 # load interop demo
 try:
-    Utils.migrate('/irisdev/app/src/settings.py')
+    migrate('/irisdev/app/src/settings.py')
 except Exception as e:
     print(e)
 

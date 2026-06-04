@@ -7,5 +7,6 @@ COPY . /irisdev/app
 ENV LD_LIBRARY_PATH=${ISC_PACKAGE_INSTALLDIR}/bin:/home/irisowner/irissys/:${LD_LIBRARY_PATH}
 ENV PATH=/home/irisowner/.local/bin:$PATH
 ENV IRISNAMESPACE="IRISAPP"
+ENV PYTHONPATH=/irisdev/app/src:${PYTHONPATH}
 
 RUN pip3 install -r /irisdev/app/requirements.txt --break-system-packages
